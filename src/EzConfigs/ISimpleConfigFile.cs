@@ -4,7 +4,7 @@ namespace EzConfigs
 {
     public interface ISimpleConfigFile
     {
-        Task<ISimpleConfig> ReadFile(string filePath, ISimpleConfig defaultValue);
-        Task SaveFile(string filePath, ISimpleConfig config);
+        Task<T> ReadFile<T>(string filePath, T defaultValue) where T : ISimpleConfig;
+        Task SaveFile<T>(string filePath, T config) where T : ISimpleConfig;
     }
 }

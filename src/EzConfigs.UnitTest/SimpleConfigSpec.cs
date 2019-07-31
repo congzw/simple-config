@@ -45,10 +45,26 @@ namespace EzConfigs
             var tryGet = simpleConfig.TryGet(theKey, "whatever");
             tryGet.ShouldEqual("abc");
         }
-        
+
+        [TestMethod]
+        public void CustomConfig_GetSet_Should_Ok()
+        {
+            var customConfig = new MockConfig();
+            customConfig.Foo = "123";
+            customConfig.AddOrUpdate("Key1", "1");
+            customConfig.TryGet("key1", "").ShouldEqual("1");
+            customConfig.Foo.ShouldEqual("123");
+        }
+
+
         private ISimpleConfig CreateSimpleConfig()
         {
             return new SimpleConfig();
         }
+    }
+
+    public class MockConfig : SimpleConfig
+    {
+        public string Foo { get; set; }
     }
 }

@@ -27,7 +27,16 @@ namespace EzConfigs
             config.ShouldNotSame(defaultValue);
             config.TryGet("key1", 0).ShouldEqual(1);
             config.TryGet("key2", "").ShouldEqual("2");
-            config.TryGet("key3", new DateTime(1999, 1, 1)).ShouldEqual(new DateTime(2000, 1,1));
+            config.TryGet("key3", new DateTime(1999, 1, 1)).ShouldEqual(new DateTime(2000, 1, 1));
+        }
+
+        [TestMethod]
+        public void GetDefaultConfigFilePath_DiffModel_Should_Diff()
+        {
+            var simpleConfigFile = CreateSimpleConfigFile();
+            var defaultConfigFilePath = simpleConfigFile.GetDefaultConfigFilePath<SimpleConfig>();
+            var defaultConfigFilePath2 = simpleConfigFile.GetDefaultConfigFilePath<MockConfig>();
+            defaultConfigFilePath.ShouldNotEqual(defaultConfigFilePath2);
         }
 
         private ISimpleConfigFile CreateSimpleConfigFile()
@@ -36,7 +45,7 @@ namespace EzConfigs
             var mockConfig = new SimpleConfig();
             mockConfig.AddOrUpdate("key1", 1);
             mockConfig.AddOrUpdate("key2", "2");
-            mockConfig.AddOrUpdate("key3", new DateTime(2000,1,1));
+            mockConfig.AddOrUpdate("key3", new DateTime(2000, 1, 1));
             mockJsonFile.MockConfig = mockConfig;
             mockJsonFile.MockConfigFilePath = "exist.json";
             return new SimpleConfigFile(mockJsonFile);
@@ -47,16 +56,16 @@ namespace EzConfigs
     {
         public ISimpleConfig MockConfig { get; set; }
         public string MockConfigFilePath { get; set; }
-        
+
         public Task<IList<T>> ReadFile<T>(string filePath)
         {
-            IList<ISimpleConfig> defaultResult = new List<ISimpleConfig>();
+            IList<T> defaultResult = new List<T>();
             if (filePath != MockConfigFilePath)
             {
                 return Task.FromResult((IList<T>)defaultResult);
             }
 
-            defaultResult.Add(MockConfig);
+            defaultResult.Add((T)MockConfig);
             return Task.FromResult((IList<T>)defaultResult);
         }
 

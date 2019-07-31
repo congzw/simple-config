@@ -11,12 +11,12 @@ namespace EzConfigs
             _simpleJsonFile = simpleJsonFile;
         }
 
-        public Task<ISimpleConfig> ReadFile(string filePath, ISimpleConfig defaultValue)
+        public Task<T> ReadFile<T>(string filePath, T defaultValue) where T : ISimpleConfig
         {
-            return _simpleJsonFile.ReadFileAsSingle<ISimpleConfig>(filePath);
+            return _simpleJsonFile.ReadFileAsSingle<T>(filePath);
         }
 
-        public Task SaveFile(string filePath, ISimpleConfig config)
+        public Task SaveFile<T>(string filePath, T config) where T : ISimpleConfig
         {
             return _simpleJsonFile.SaveFileAsSingle(filePath, config, true);
         }

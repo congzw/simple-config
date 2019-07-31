@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace EzConfigs
 {
-    public class SimpleConfig : ConcurrentDictionary<string, object>, ISimpleConfig
+    public class SimpleConfig : ISimpleConfig
     {
         private readonly object _lock = new object();
 
-        public SimpleConfig() : base(StringComparer.OrdinalIgnoreCase)
+        public SimpleConfig()
         {
+            Items = new ConcurrentDictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         }
+
+        public IDictionary<string, object> Items { get; set; }
 
         public void AddOrUpdate<T>(string key, T value)
         {
             lock (_lock)
             {
-                this[key] = value;
+                Items[key] = value;
             }
         }
 
@@ -23,11 +27,11 @@ namespace EzConfigs
         {
             lock (_lock)
             {
-                if (!this.ContainsKey(key))
+                if (!Items.ContainsKey(key))
                 {
                     return defaultValue;
                 }
-                return (T)this[key];
+                return (T)Items[key];
             }
         }
     }
