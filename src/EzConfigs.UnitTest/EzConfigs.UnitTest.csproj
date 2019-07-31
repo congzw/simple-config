@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SimpleConfigFileSpec.cs" />
     <Compile Include="SimpleConfigSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Helpers\AssertHelper.cs" />

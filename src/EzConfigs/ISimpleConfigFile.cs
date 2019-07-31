@@ -1,8 +1,10 @@
-﻿namespace EzConfigs
+﻿using System.Threading.Tasks;
+
+namespace EzConfigs
 {
     public interface ISimpleConfigFile
     {
-        ISimpleConfig ReadFile(string filePath);
-        void SaveFile(string filePath, ISimpleConfig config);
+        Task<ISimpleConfig> ReadFile(string filePath, ISimpleConfig defaultValue);
+        Task SaveFile(string filePath, ISimpleConfig config);
     }
 }
