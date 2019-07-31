@@ -26,8 +26,7 @@ namespace EzConfigs
             var theValue = simpleConfig.TryGet(theKey, "1");
             theValue.ShouldEqual("abc");
         }
-
-
+        
         [TestMethod]
         public void TryGet_NotExist_Should_Return_Default()
         {
@@ -46,7 +45,7 @@ namespace EzConfigs
             var tryGet = simpleConfig.TryGet(theKey, "whatever");
             tryGet.ShouldEqual("abc");
         }
-
+        
         private ISimpleConfig CreateSimpleConfig()
         {
             return new SimpleConfig();

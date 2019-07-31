@@ -28,7 +28,6 @@ namespace EzConfigs
             config.TryGet("key1", 0).ShouldEqual(1);
             config.TryGet("key2", "").ShouldEqual("2");
             config.TryGet("key3", new DateTime(1999, 1, 1)).ShouldEqual(new DateTime(2000, 1,1));
-            config.TryGet("key4", new Foo()).Bar.ShouldEqual("blah");
         }
 
         private ISimpleConfigFile CreateSimpleConfigFile()
@@ -38,7 +37,6 @@ namespace EzConfigs
             mockConfig.AddOrUpdate("key1", 1);
             mockConfig.AddOrUpdate("key2", "2");
             mockConfig.AddOrUpdate("key3", new DateTime(2000,1,1));
-            mockConfig.AddOrUpdate("key4", new Foo() {Bar = "blah"});
             mockJsonFile.MockConfig = mockConfig;
             mockJsonFile.MockConfigFilePath = "exist.json";
             return new SimpleConfigFile(mockJsonFile);
@@ -73,10 +71,5 @@ namespace EzConfigs
             MockConfig = theOne as ISimpleConfig;
             return Task.FromResult(0);
         }
-    }
-
-    internal class Foo
-    {
-        public string Bar { get; set; }
     }
 }

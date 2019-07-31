@@ -49,6 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="_Foo.cs" />
+    <Compile Include="SimpleConfigExtensionSpec.cs" />
     <Compile Include="SimpleConfigFileSpec.cs" />
     <Compile Include="SimpleConfigSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
