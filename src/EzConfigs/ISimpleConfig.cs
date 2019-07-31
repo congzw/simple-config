@@ -2,7 +2,7 @@
 {
     public interface ISimpleConfig
     {
-        void Save<T>(string key, object value);
+        void AddOrUpdate<T>(string key, T value);
         T TryGet<T>(string key, T defaultValue);
     }
 }

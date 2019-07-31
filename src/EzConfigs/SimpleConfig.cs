@@ -3,20 +3,32 @@ using System.Collections.Concurrent;
 
 namespace EzConfigs
 {
-    public class SimpleConfig : ConcurrentDictionary<string, string>, ISimpleConfig
+    public class SimpleConfig : ConcurrentDictionary<string, object>, ISimpleConfig
     {
+        private readonly object _lock = new object();
+
         public SimpleConfig() : base(StringComparer.OrdinalIgnoreCase)
         {
         }
 
-        public void Save<T>(string key, object value)
+        public void AddOrUpdate<T>(string key, T value)
         {
-            throw new NotImplementedException();
+            lock (_lock)
+            {
+                this[key] = value;
+            }
         }
 
         public T TryGet<T>(string key, T defaultValue)
         {
-            throw new NotImplementedException();
+            lock (_lock)
+            {
+                if (!this.ContainsKey(key))
+                {
+                    return defaultValue;
+                }
+                return (T)this[key];
+            }
         }
     }
 }
